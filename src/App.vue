@@ -1,20 +1,43 @@
 <template>
+
   <header>
     <h1>Card Maker</h1>
+    <nav>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> |
+      <router-link to="/card_creation">Create New Card</router-link>
+    </nav>
   </header>
-  <CardCreation/>
+
+  <router-view/>
+
 </template>
 
-<script>
-import CardCreation from './components/CardCreation.vue'
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #3b3a39;
+}
+header {
 
-export default {
-  name: 'App',
-  components: {
-    CardCreation,
+
+  nav {
+    padding: 1rem;
+
+    a {
+      font-weight: bold;
+      text-decoration: none;
+      color: #3b3a39;
+
+      &.router-link-exact-active {
+        color: grey;
+        text-decoration: underline;
+      }
+    }
   }
 }
-</script>
 
-<style>
 </style>

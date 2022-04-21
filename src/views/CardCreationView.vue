@@ -112,7 +112,7 @@
 
 <script>
 export default {
-  name: "CardCreation",
+  name: "CardCreationView",
   data() {
     return {
       name: null,
