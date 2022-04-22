@@ -1,4 +1,6 @@
-# card_maker_front
+# Incus Deum Front
+The front part of a collectible cards creator App.  
+*Work In Progress...*
 
 ## Project setup
 ```
