@@ -13,12 +13,14 @@
                   v-model="name"
                   type="text"
                   class="input-name"
+                  name="name"
                   placeholder="Name..."
                   required>
                 <input
                   v-model="categorie"
                   type="text"
                   class="input-categorie"
+                  name="categorie"
                   placeholder="Categorie..."
                   required>
               </div>
@@ -27,23 +29,26 @@
                   v-model="value"
                   type="text"
                   class="input-value"
+                  name="value"
                   placeholder="0"
                   maxlength="2"
                   required>
               </div>
             </div>
             <div class="file">
-              <label for="front-image">Front image:</label>
+              <label for="frontImage">Front image:</label>
               <input
-                @change="setImage($event, 'front')"
+                @change="setImage"
                 type="file"
                 class="input-image"
+                name="frontImage"
                 accept="image/*"
                 required>
-              <label for="back-image">Back image:</label>
+              <label for="backImage">Back image:</label>
               <input
-                @change="setImage($event, 'back')"
+                @change="setImage"
                 type="file" class="input-image"
+                name="backImage"
                 accept="image/*"
                 required>
               <div class="color-wrapper">
@@ -61,6 +66,7 @@
               <textarea
                 v-model="quote"
                 class="input-quote"
+                name="quote"
                 rows="3" cols="20"
                 placeholder="Description..."
                 required>
@@ -69,6 +75,7 @@
                 v-model="fx"
                 type="text"
                 class="input-fx"
+                name="fx"
                 placeholder="Effects..."
                 required>
             </div>
@@ -85,7 +92,11 @@
         class="card"
         :class="{ active: isActive }"
         :style="{ 'border-color': color, 'transform': rotate }">
-        <div id="front" class="face" :class="{ hidden: reverse }">
+        <div id="front"
+          class="face"
+          :class="{ hidden: reverse }"
+          :style="{ 'background-image': `url('${frontImage}')` }"
+          >
           <div class="content">
             <div class="card-header">
               <div class="card-title">
@@ -100,7 +111,12 @@
             </div>
           </div>
         </div>
-        <div id="back" class="face" :class="{ hidden: !reverse }"></div>
+        <div
+          id="back"
+          class="face"
+          :class="{ hidden: !reverse }"
+          :style="{ 'background-image': `url('${backImage}')` }">
+        </div>
       </div>
     </div>
 
@@ -118,6 +134,8 @@ export default {
       name: null,
       categorie: null,
       value: null,
+      frontImage: null,
+      backImage: null,
       quote: null,
       fx: null,
       color: null,
@@ -136,20 +154,29 @@ export default {
     this.cardCenterY = rect.top + card.offsetHeight/2;
   },
   methods: {
-    setImage(event, id) {
+    setImage(event) {
       this.message = null;
-      var side = document.getElementById(id);
-      var input = event.target;
-      var url = input.value;
+      var files = event.target.files;
+      var url = event.target.value;
       var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-      if (input.files && input.files[0] &&
+      if (files && files[0] &&
           (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg"))
         {
           var reader = new FileReader();
-          reader.onload = function (e) {
-            side.style.backgroundImage = `url('${e.target.result}')`;
-          }
-          reader.readAsDataURL(input.files[0]);
+          reader.readAsDataURL(files[0]);
+
+          return new Promise(resolve => {
+            reader.onload = function (e) {
+              resolve(e.target.result);
+            }
+          }).then(result => {
+            if (event.target.name === 'frontImage') {
+              this.frontImage = result;
+            } else if (event.target.name === 'backImage') {
+              this.backImage = result;
+            }
+          });
+
         } else {
           this.message = "No file or bad extension (gif, png, jpg, jpeg only)!";
         }
