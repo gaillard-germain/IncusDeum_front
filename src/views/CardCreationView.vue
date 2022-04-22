@@ -10,14 +10,14 @@
             <div class="card-header">
               <div class="card-title">
                 <input
-                  v-model="name"
+                  v-model="card.name"
                   type="text"
                   class="input-name"
                   name="name"
                   placeholder="Name..."
                   required>
                 <input
-                  v-model="categorie"
+                  v-model="card.categorie"
                   type="text"
                   class="input-categorie"
                   name="categorie"
@@ -26,7 +26,7 @@
               </div>
               <div class="input-value-wrapper">
                 <input
-                  v-model="value"
+                  v-model="card.value"
                   type="text"
                   class="input-value"
                   name="value"
@@ -64,7 +64,7 @@
             </div>
             <div class="card-description">
               <textarea
-                v-model="quote"
+                v-model="card.quote"
                 class="input-quote"
                 name="quote"
                 rows="3" cols="20"
@@ -72,7 +72,7 @@
                 required>
               </textarea>
               <input
-                v-model="fx"
+                v-model="card.fx"
                 type="text"
                 class="input-fx"
                 name="fx"
@@ -85,39 +85,9 @@
       <button class="submit-btn" type="submit">Submit card</button>
     </form>
 
-    <div @click="toggleActive" class="card-wrapper">
+    <div class="card-wrapper">
       <h2>Preview</h2>
-      <div
-        id="card-preview"
-        class="card"
-        :class="{ active: isActive }"
-        :style="{ 'border-color': color, 'transform': rotate }">
-        <div id="front"
-          class="face"
-          :class="{ hidden: reverse }"
-          :style="{ 'background-image': `url('${frontImage}')` }"
-          >
-          <div class="content">
-            <div class="card-header">
-              <div class="card-title">
-                <div class="name">{{ name }}</div>
-                <div class="categorie">{{ categorie }}</div>
-              </div>
-              <div class="value">{{ value }}</div>
-            </div>
-            <div class="card-description">
-              <div class="quote">{{ quote }}</div>
-              <div class="fx">{{ fx }}</div>
-            </div>
-          </div>
-        </div>
-        <div
-          id="back"
-          class="face"
-          :class="{ hidden: !reverse }"
-          :style="{ 'background-image': `url('${backImage}')` }">
-        </div>
-      </div>
+      <CardPreview :card="card"></CardPreview>
     </div>
 
     <p class="text-warning">{{ message }}</p>
@@ -127,31 +97,27 @@
 </template>
 
 <script>
+import CardPreview from '../components/CardPreview.vue'
+
 export default {
   name: "CardCreationView",
+  components: {
+    CardPreview,
+  },
   data() {
     return {
-      name: null,
-      categorie: null,
-      value: null,
-      frontImage: null,
-      backImage: null,
-      quote: null,
-      fx: null,
-      color: null,
-      cardCenterX: 0,
-      cardCenterY: 0,
-      rotate: null,
+      card: {
+        name: null,
+        categorie: null,
+        value: null,
+        frontImage: null,
+        backImage: null,
+        color: null,
+        quote: null,
+        fx: null
+      },
       message: null,
-      isActive: false,
-      reverse: false,
     }
-  },
-  mounted() {
-    let card = document.getElementById("card-preview");
-    let rect = card.getBoundingClientRect();
-    this.cardCenterX = rect.left + card.offsetWidth/2;
-    this.cardCenterY = rect.top + card.offsetHeight/2;
   },
   methods: {
     setImage(event) {
@@ -171,9 +137,9 @@ export default {
             }
           }).then(result => {
             if (event.target.name === 'frontImage') {
-              this.frontImage = result;
+              this.card.frontImage = result;
             } else if (event.target.name === 'backImage') {
-              this.backImage = result;
+              this.card.backImage = result;
             }
           });
 
@@ -182,32 +148,8 @@ export default {
         }
     },
     setColor(event) {
-      this.color = event.target.value;
+      this.card.color = event.target.value;
     },
-    toggleActive() {
-      if (this.isActive) {
-        this.isActive = false;
-        this.reverse = false;
-        this.rotate = `rotate3d(1, 1, 1, 0deg)`;
-        window.removeEventListener("mousemove", this.flipCard);
-      } else {
-        this.isActive = true
-        window.addEventListener("mousemove", this.flipCard);
-      }
-    },
-    flipCard(event) {
-      let dx = event.x - this.cardCenterX;
-      let dy = event.y - this.cardCenterY;
-      let angle = Math.atan2(dy, dx) * 180 / Math.PI;
-      this.rotate = `rotate3d(1, 1, 1, ${angle}deg)`;
-      if (angle > 120 || angle < -120) {
-        if (!this.reverse) {
-          this.reverse = true;
-        }
-      } else if (this.reverse) {
-          this.reverse = false;
-      }
-    }
   },
 }
 </script>

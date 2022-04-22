@@ -1,0 +1,87 @@
+<template lang="html">
+
+  <div
+    id="card-preview"
+    @click="toggleActive"
+    class="card"
+    :class="{ active: isActive }"
+    :style="{ 'border-color': card.color, 'transform': rotate }">
+    <div id="front"
+      class="face"
+      :class="{ hidden: reverse }"
+      :style="{ 'background-image': `url('${card.frontImage}')` }"
+      >
+      <div class="content">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="name">{{ card.name }}</div>
+            <div class="categorie">{{ card.categorie }}</div>
+          </div>
+          <div class="value">{{ card.value }}</div>
+        </div>
+        <div class="card-description">
+          <div class="quote">{{ card.quote }}</div>
+          <div class="fx">{{ card.fx }}</div>
+        </div>
+      </div>
+    </div>
+    <div
+      id="back"
+      class="face"
+      :class="{ hidden: !reverse }"
+      :style="{ 'background-image': `url('${card.backImage}')` }">
+    </div>
+  </div>
+
+</template>
+
+<script>
+export default {
+  name: "CardPreview",
+  props: ['card'],
+  data() {
+    return {
+      centerX: 0,
+      centerY: 0,
+      rotate: null,
+      isActive: false,
+      reverse: false,
+    }
+  },
+  mounted() {
+    let card = document.getElementById("card-preview");
+    let rect = card.getBoundingClientRect();
+    this.centerX = rect.left + card.offsetWidth/2;
+    this.centerY = rect.top + card.offsetHeight/2;
+  },
+  methods: {
+    toggleActive() {
+      if (this.isActive) {
+        this.isActive = false;
+        this.reverse = false;
+        this.rotate = `rotate3d(1, 1, 1, 0deg)`;
+        window.removeEventListener("mousemove", this.flipCard);
+      } else {
+        this.isActive = true
+        window.addEventListener("mousemove", this.flipCard);
+      }
+    },
+    flipCard(event) {
+      let dx = event.x - this.centerX;
+      let dy = event.y - this.centerY;
+      let angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      this.rotate = `rotate3d(1, 1, 1, ${angle}deg)`;
+      if (angle > 120 || angle < -120) {
+        if (!this.reverse) {
+          this.reverse = true;
+        }
+      } else if (this.reverse) {
+          this.reverse = false;
+      }
+    }
+  },
+}
+</script>
+
+<style lang="css" scoped>
+</style>
