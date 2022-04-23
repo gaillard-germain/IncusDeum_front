@@ -1,7 +1,7 @@
 <template>
 
   <header>
-    <h1>Card Maker</h1>
+    <h1>Incus Deum</h1>
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
