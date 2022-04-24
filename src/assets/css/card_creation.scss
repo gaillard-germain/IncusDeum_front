@@ -1,0 +1,16 @@
+.card-creation {
+
+  .board {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .card-wrapper {
+      padding: 1rem 2rem 3rem 2rem;
+      background-color: #E6E3DF;
+    }
+  }
+}

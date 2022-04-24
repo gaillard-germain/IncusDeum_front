@@ -1,14 +1,16 @@
 <template lang="html">
 
-  <div class="board">
+  <div class="card-creation">
+    <div class="board">
 
-    <CardForm :value="card"></CardForm>
+      <CardForm :value="card"></CardForm>
 
-    <div class="card-wrapper">
-      <h2>Preview</h2>
-      <CardPreview :card="card"></CardPreview>
+      <div class="card-wrapper">
+        <h2>Preview</h2>
+        <CardPreview :card="card"></CardPreview>
+      </div>
+
     </div>
-
   </div>
 
 </template>

@@ -2,8 +2,8 @@
 
     <form class="card-form">
       <h2>Define Card Attributs</h2>
-      <div class="card inner-form">
-        <div class="face">
+      <div class="card">
+        <div class="face inner-form">
           <div class="content">
             <div class="card-header">
               <div class="card-title">
@@ -22,7 +22,7 @@
                   placeholder="Categorie..."
                   required>
               </div>
-              <div class="input-value-wrapper">
+              <div class="value">
                 <input
                   v-model="card.value"
                   type="text"
@@ -50,7 +50,7 @@
                 accept="image/*"
                 required>
               <div class="color-wrapper">
-                <label for="color">Border color:</label>
+                <label for="color">Color:</label>
                 <input
                   @change="setColor"
                   type="color"

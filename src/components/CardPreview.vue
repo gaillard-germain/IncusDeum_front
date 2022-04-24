@@ -3,11 +3,11 @@
   <div
     id="card-preview"
     @click="toggleActive"
-    class="card"
+    class="card clickable"
     :class="{ active: isActive }"
-    :style="{ 'border-color': card.color, 'transform': rotate }">
-    <div id="front"
-      class="face"
+    :style="{ '--card-color': card.color, 'transform': rotate }">
+    <div
+      class="face front"
       :class="{ hidden: reverse }"
       :style="{ 'background-image': `url('${card.frontImage}')` }"
       >
@@ -26,8 +26,7 @@
       </div>
     </div>
     <div
-      id="back"
-      class="face"
+      class="face back"
       :class="{ hidden: !reverse }"
       :style="{ 'background-image': `url('${card.backImage}')` }">
     </div>
