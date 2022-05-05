@@ -1,6 +1,10 @@
 <template lang="html">
 
-    <form class="card-form">
+    <form
+      @submit="submitCard"
+      class="card-form"
+      method="post"
+      enctype="multipart/form-data">
       <h2>Define Card Attributs</h2>
       <div class="card">
         <div class="face inner-form">
@@ -40,15 +44,13 @@
                 type="file"
                 class="input-image"
                 name="frontImage"
-                accept="image/*"
-                required>
+                accept="image/*">
               <label for="backImage">Back image:</label>
               <input
                 @change="setImage"
                 type="file" class="input-image"
                 name="backImage"
-                accept="image/*"
-                required>
+                accept="image/*">
               <div class="color-wrapper">
                 <label for="color">Color:</label>
                 <input
@@ -56,8 +58,7 @@
                   type="color"
                   class="input-color"
                   name="color"
-                  value="#474543"
-                  required>
+                  value="#474543">
               </div>
             </div>
             <div class="card-description">
@@ -87,6 +88,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "CardForm",
   props: ['value'],
@@ -127,6 +130,18 @@ export default {
     setColor(event) {
       this.card.color = event.target.value;
     },
+    submitCard(event){
+      event.preventDefault();
+
+      axios
+        .post('http://localhost:8000/card', this.card)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
 }
 </script>

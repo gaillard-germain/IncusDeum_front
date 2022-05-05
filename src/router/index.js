@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CardCreationView from '../views/CardCreationView.vue'
+import CardListView from '../views/CardListView.vue'
 
 const routes = [
   {
@@ -20,7 +21,12 @@ const routes = [
     path: '/card_creation',
     name: 'card_creation',
     component: CardCreationView
-  }
+  },
+  {
+    path: '/card_list',
+    name: 'card_list',
+    component: CardListView
+  },
 ]
 
 const router = createRouter({

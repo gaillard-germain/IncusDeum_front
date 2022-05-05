@@ -5,6 +5,7 @@
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
+      <router-link to="/card_list">Card list</router-link> |
       <router-link to="/card_creation">Create New Card</router-link>
     </nav>
   </header>
