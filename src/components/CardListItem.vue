@@ -1,6 +1,9 @@
 <template lang="html">
   <div class="row">
     <div class="cell">
+      {{ card.id }}
+    </div>
+    <div class="cell">
       {{ card.name }}
     </div>
     <div class="cell">
@@ -28,9 +31,17 @@ export default {
 <style lang="css" scoped>
 .row {
   display: flex;
-  padding: 0.5rem;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.2rem;
+  margin: 0.2rem auto;
+  background-color: lightgrey;
 }
 .cell {
+  margin: 0.2rem;
   padding: 0.5rem;
+  border: 1px solid grey;
+  background-color: white;
+  width: 8rem;
 }
 </style>

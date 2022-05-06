@@ -29,12 +29,15 @@ export default {
     return {
       card: {
         name: null,
-        categorie: null,
+        category: {
+          id: null,
+          name: null
+        },
         value: null,
         frontImage: null,
         backImage: null,
         color: null,
-        quote: null,
+        description: null,
         fx: null
       },
     }

@@ -15,12 +15,12 @@
         <div class="card-header">
           <div class="card-title">
             <div class="name">{{ card.name }}</div>
-            <div class="categorie">{{ card.categorie }}</div>
+            <div class="category">{{ card.category.name }}</div>
           </div>
           <div class="value">{{ card.value }}</div>
         </div>
         <div class="card-description">
-          <div class="quote">{{ card.quote }}</div>
+          <div class="description">{{ card.description }}</div>
           <div class="fx">{{ card.fx }}</div>
         </div>
       </div>

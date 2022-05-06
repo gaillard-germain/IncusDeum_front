@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { API } from '@/services/Api'
 import CardListItem from '../components/CardListItem.vue'
 
 export default {
@@ -22,8 +22,8 @@ export default {
     }
   },
   mounted() {
-    axios
-      .get('http://localhost:8000/card')
+    API
+      .get('card')
       .then((response) => {
         this.cards = response.data
       })

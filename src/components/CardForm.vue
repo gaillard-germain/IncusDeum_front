@@ -18,13 +18,16 @@
                   name="name"
                   placeholder="Name..."
                   required>
-                <input
-                  v-model="card.categorie"
+                <select class="input-category" name="category" @change="setCategory">
+                  <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                </select>
+                <!-- <input
+                  v-model="card.category"
                   type="text"
-                  class="input-categorie"
-                  name="categorie"
-                  placeholder="Categorie..."
-                  required>
+                  class="input-category"
+                  name="category"
+                  placeholder="Category..."
+                  required> -->
               </div>
               <div class="value">
                 <input
@@ -63,9 +66,9 @@
             </div>
             <div class="card-description">
               <textarea
-                v-model="card.quote"
-                class="input-quote"
-                name="quote"
+                v-model="card.description"
+                class="input-description"
+                name="description"
                 rows="3" cols="20"
                 placeholder="Description..."
                 required>
@@ -88,18 +91,35 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { API } from '@/services/Api'
 
 export default {
   name: "CardForm",
   props: ['value'],
   data() {
     return {
+      categories: null,
       card: this.value,
       message: null,
     }
   },
+  mounted() {
+    API
+      .get('category')
+      .then((response) => {
+        console.log(response.data);
+        this.categories = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   methods: {
+    setCategory(event) {
+      this.card.category = this.categories.find(
+        (e) => e.id == event.target.value
+      );
+    },
     setImage(event) {
       this.message = null;
       var files = event.target.files;
@@ -133,10 +153,11 @@ export default {
     submitCard(event){
       event.preventDefault();
 
-      axios
-        .post('http://localhost:8000/card', this.card)
+      API
+        .post('card', this.card)
         .then((response) => {
           console.log(response);
+          this.$router.push('/card_list');
         })
         .catch((error) => {
           console.log(error);
