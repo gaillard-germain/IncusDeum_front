@@ -19,10 +19,10 @@
                   placeholder="Name..."
                   required>
                 <div class="input-category">
-                  <select name="category" @change="setCategory">
+                  <select name="category" @change="setCategory" title="Select a categorie">
                     <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
                   </select>
-                  <button type="button" name="addCategory">+</button>
+                  <button type="button" name="addCategory" @click="addCategory" title="Add new category">+</button>
                 </div>
               </div>
               <div class="value">
@@ -83,14 +83,19 @@
       <button class="submit-btn" type="submit">Submit card</button>
       <p class="text-warning">{{ message }}</p>
     </form>
+    <AddCategory ref="addCategory"></AddCategory>
 
 </template>
 
 <script>
 import { API } from '@/services/Api'
+import AddCategory from './AddCategory.vue'
 
 export default {
   name: "CardForm",
+  components: {
+    AddCategory
+  },
   props: ['value'],
   data() {
     return {
@@ -100,21 +105,32 @@ export default {
     }
   },
   mounted() {
-    API
-      .get('category')
-      .then((response) => {
-        console.log(response.data);
-        this.categories = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.getCategory();
   },
   methods: {
+    getCategory() {
+      API
+        .get('category')
+        .then((response) => {
+          this.categories = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     setCategory(event) {
       this.card.category = this.categories.find(
         (e) => e.id == event.target.value
       );
+    },
+    async addCategory() {
+      const ok = await this.$refs.addCategory.show()
+            if (ok) {
+              this.getCategory();
+              console.log("New category added");
+            } else {
+              console.log("Aborted");
+            }
     },
     setImage(event) {
       this.message = null;
