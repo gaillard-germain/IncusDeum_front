@@ -22,8 +22,8 @@
   text-align: center;
   color: #3b3a39;
 }
-header {
 
+header {
 
   nav {
     padding: 1rem;
@@ -40,5 +40,4 @@ header {
     }
   }
 }
-
 </style>

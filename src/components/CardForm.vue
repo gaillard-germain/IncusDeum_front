@@ -18,16 +18,12 @@
                   name="name"
                   placeholder="Name..."
                   required>
-                <select class="input-category" name="category" @change="setCategory">
-                  <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
-                </select>
-                <!-- <input
-                  v-model="card.category"
-                  type="text"
-                  class="input-category"
-                  name="category"
-                  placeholder="Category..."
-                  required> -->
+                <div class="input-category">
+                  <select name="category" @change="setCategory">
+                    <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                  </select>
+                  <button type="button" name="addCategory">+</button>
+                </div>
               </div>
               <div class="value">
                 <input

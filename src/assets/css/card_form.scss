@@ -11,9 +11,38 @@
     }
 
     .input-category {
-      width: 10rem;
-      font-size: 0.8rem;
-      font-style: italic;
+      padding-top: 0.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.2rem;
+
+      select {
+        font-size: 0.8rem;
+        font-style: italic;
+        background-color: white;
+        border: 1px solid grey;
+        border-radius: 2px;
+      }
+
+      button {
+        padding: 0;
+        width: 1.2rem;
+        height: 1.2rem;
+        border-radius: 50%;
+        border: 2px solid #474543;
+        line-height: 0;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #474543;
+        background-color: inherit;
+        cursor: pointer;
+      }
+
+      button:hover {
+        border-color: grey;
+        color: grey;
+      }
     }
 
     .input-value {
