@@ -13,8 +13,8 @@
       {{ card.value }}
     </div>
     <div class="cell">
-      <div v-for="effect in card.fx" :key="effect.id">
-        {{ effect.name }} {{ effect.value }}
+      <div v-for="fx in card.fx" :key="fx.id">
+        {{ fx.name }} {{ fx.value }}
       </div>
     </div>
 

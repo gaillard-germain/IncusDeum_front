@@ -20,9 +20,11 @@
                   required>
                 <div class="input-category">
                   <select name="category" @change="setCategory" title="Select a categorie">
-                    <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                    <option v-for="category in categories" :key="category.id" :value="category.id">
+                      {{ category.name }}
+                    </option>
                   </select>
-                  <button type="button" name="addCategory" @click="addCategory" title="Add new category">+</button>
+                  <button class="add-button" type="button" name="addCategory" @click="addCategory" title="Add new category">+</button>
                 </div>
               </div>
               <div class="value">
@@ -65,17 +67,18 @@
                 v-model="card.description"
                 class="input-description"
                 name="description"
-                rows="3" cols="20"
+                rows="3" cols="30"
                 placeholder="Description..."
                 required>
               </textarea>
-              <input
-                v-model="card.fx"
-                type="text"
-                class="input-fx"
-                name="fx"
-                placeholder="Effects..."
-                required>
+              <div class="info">Scroll down to see all fx...</div>
+              <div class="input-fx">
+                <div class="checkbox-wrapper" v-for="fx in fxs" :key="fx.id">
+                  <label for="fx.name">{{ fx.name }} {{ fx.value }}</label>
+                  <input type="checkbox" @click="setFx" :name="fx.name" :value="fx.id">
+                </div>
+                <button class="add-button" type="button" name="addFx" @click="addFx" title="Add new effect">+</button>
+              </div>
             </div>
           </div>
         </div>
@@ -83,29 +86,38 @@
       <button class="submit-btn" type="submit">Submit card</button>
       <p class="text-warning">{{ message }}</p>
     </form>
-    <AddCategory ref="addCategory"></AddCategory>
+    <AddNew ref="addCategory" :fields="categoryInputs" :apiPoint="'category'">
+      <h2>Create new card's category</h2>
+    </AddNew>
+    <AddNew ref="addFx" :fields="fxInputs" :apiPoint="'fx'">
+      <h2>Create new card's effect</h2>
+    </AddNew>
 
 </template>
 
 <script>
 import { API } from '@/services/Api'
-import AddCategory from './AddCategory.vue'
+import AddNew from './AddNew.vue'
 
 export default {
   name: "CardForm",
   components: {
-    AddCategory
+    AddNew
   },
   props: ['value'],
   data() {
     return {
+      categoryInputs: {"name": null},
+      fxInputs: {"name": null, "value": null},
       categories: null,
+      fxs: null,
       card: this.value,
       message: null,
     }
   },
   mounted() {
     this.getCategory();
+    this.getFx();
   },
   methods: {
     getCategory() {
@@ -118,16 +130,43 @@ export default {
           console.log(error);
         });
     },
+    getFx() {
+      API
+        .get('fx')
+        .then((response) => {
+          this.fxs = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     setCategory(event) {
       this.card.category = this.categories.find(
         (e) => e.id == event.target.value
       );
+    },
+    setFx(event) {
+      let fx = this.fxs.find((e) => e.id == event.target.value);
+      if (event.target.checked) {
+        this.card.fx.push(fx);
+      } else {
+        this.card.fx = this.card.fx.filter((e) => { return e !== fx })
+      }
     },
     async addCategory() {
       const ok = await this.$refs.addCategory.show()
             if (ok) {
               this.getCategory();
               console.log("New category added");
+            } else {
+              console.log("Aborted");
+            }
+    },
+    async addFx() {
+      const ok = await this.$refs.addFx.show()
+            if (ok) {
+              this.getFx();
+              console.log("New effect added");
             } else {
               console.log("Aborted");
             }

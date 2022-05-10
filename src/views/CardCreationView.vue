@@ -38,7 +38,7 @@ export default {
         backImage: null,
         color: null,
         description: null,
-        fx: null
+        fx: []
       },
     }
   },

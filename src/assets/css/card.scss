@@ -76,8 +76,17 @@
           font-size: 0.8rem;
         }
 
-        .fx {
-          font-weight: bold;
+        .fx-wrapper {
+          padding: 0 1rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 0 1rem;
+
+          .fx {
+            font-weight: bold;
+          }
         }
       }
     }

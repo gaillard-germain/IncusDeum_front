@@ -24,25 +24,25 @@
         border: 1px solid grey;
         border-radius: 2px;
       }
+    }
 
-      button {
-        padding: 0;
-        width: 1.2rem;
-        height: 1.2rem;
-        border-radius: 50%;
-        border: 2px solid #474543;
-        line-height: 0;
-        font-size: 1rem;
-        font-weight: bold;
-        color: #474543;
-        background-color: inherit;
-        cursor: pointer;
-      }
+    .add-button {
+      padding: 0;
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 50%;
+      border: 2px solid #474543;
+      line-height: 0;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #474543;
+      background-color: inherit;
+      cursor: pointer;
+    }
 
-      button:hover {
-        border-color: grey;
-        color: grey;
-      }
+    .add-button:hover {
+      border-color: grey;
+      color: grey;
     }
 
     .input-value {
@@ -92,8 +92,21 @@
       text-align: center;
     }
 
+    .info {
+      font-size: 0.8rem;
+      color: #474543;
+    }
+
     .input-fx {
-      text-align: center;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0 1rem;
+      max-height: 2.8rem;
+      overflow-y: scroll;
+      scrollbar-color: #474543 white;
     }
   }
 

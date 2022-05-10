@@ -2,13 +2,15 @@
 
   <PopupModal ref="popup">
 
-    <h2>Create new card's category</h2>
+    <slot></slot>
 
     <form method="post">
-      <label for="name"></label>
-      <input v-model="name" type="text" name="name" value="" placeholder="Enter category name..." required>
+      <div class="input-wrapper" v-for="(value, field, index) in payload" :key="index">
+        <label for="field">{{ field }}</label>
+        <input v-model="payload[field]" type="text" name="field" value="" placeholder="" required>
+      </div>
       <div class="button-wrapper">
-        <button type="submit" name="button" @click="submitCategory">Submit</button>
+        <button type="submit" name="button" @click="submitNew">Submit</button>
         <button type="button" name="button" @click="cancel">Cancel</button>
       </div>
     </form>
@@ -22,13 +24,14 @@ import { API } from '@/services/Api'
 import PopupModal from '../components/PopupModal.vue'
 
 export default {
-  name: "AddCategory",
+  name: "AddNew",
   components: {
     PopupModal
   },
+  props: ['fields', 'apiPoint'],
   data() {
     return {
-      name: null,
+      payload: this.fields,
       resolvePromise: undefined,
       rejectPromise: undefined,
     }
@@ -42,12 +45,11 @@ export default {
           this.rejectPromise = reject;
       })
     },
-    submitCategory(event) {
+    submitNew(event) {
       event.preventDefault();
-      console.log(this.name);
 
       API
-        .post('category', this.name)
+        .post(this.apiPoint, this.payload)
         .then((response) => {
           console.log(response);
           this.$refs.popup.close();
@@ -68,6 +70,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .input-wrapper {
+    padding: 0.5rem;
+
+    label {
+      padding-right: 0.5rem;
+    }
+  }
+
   .button-wrapper {
     margin: 1rem;
 

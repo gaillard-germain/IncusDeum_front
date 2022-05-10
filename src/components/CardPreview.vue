@@ -21,7 +21,11 @@
         </div>
         <div class="card-description">
           <div class="description">{{ card.description }}</div>
-          <div class="fx">{{ card.fx }}</div>
+          <div class="fx-wrapper">
+            <div v-for="fx in card.fx" class="fx" :key="fx.id">
+              {{ fx.name }} {{ fx.value }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
