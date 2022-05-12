@@ -113,6 +113,7 @@ export default {
       fxs: null,
       card: this.value,
       message: null,
+      frontFile: null
     }
   },
   mounted() {
@@ -179,30 +180,38 @@ export default {
       if (files && files[0] &&
           (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg"))
         {
-          var reader = new FileReader();
-          reader.readAsDataURL(files[0]);
-
-          return new Promise(resolve => {
-            reader.onload = function (e) {
-              resolve(e.target.result);
-            }
-          }).then(result => {
             if (event.target.name === 'frontImage') {
-              this.card.frontImage = result;
+              this.card.frontImage = URL.createObjectURL(files[0]);
+              this.frontFile = files[0];
             } else if (event.target.name === 'backImage') {
-              this.card.backImage = result;
+              this.card.backImage = URL.createObjectURL(files[0]);
+              this.backFile = files[0];
             }
-          });
 
         } else {
           this.message = "No file or bad extension (gif, png, jpg, jpeg only)!";
         }
     },
+    uploadImage(file) {
+      var formdata = new FormData();
+      formdata.append('file', file);
+      return API
+        .post('media', formdata, {headers: {'Content-Type': 'multipart/form-data'}})
+        .then((response) => {
+          console.log(response);
+          return response.data.id;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     setColor(event) {
       this.card.color = event.target.value;
     },
-    submitCard(event){
+    async submitCard(event){
       event.preventDefault();
+
+      this.card.frontImage = await this.uploadImage(this.frontFile);
 
       API
         .post('card', this.card)
