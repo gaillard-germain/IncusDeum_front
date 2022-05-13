@@ -20,7 +20,7 @@
                   required>
                 <div class="input-category">
                   <select name="category" @change="setCategory" title="Select a categorie">
-                    <option v-for="category in categories" :key="category.id" :value="category.id">
+                    <option v-for="(category, index) in categories" :key="index" :value="category.id">
                       {{ category.name }}
                     </option>
                   </select>
@@ -73,7 +73,7 @@
               </textarea>
               <div class="info">Scroll down to see all fx...</div>
               <div class="input-fx">
-                <div class="checkbox-wrapper" v-for="fx in fxs" :key="fx.id">
+                <div class="checkbox-wrapper" v-for="(fx, index) in fxs" :key="index">
                   <label for="fx.name">{{ fx.name }} {{ fx.value }}</label>
                   <input type="checkbox" @click="setFx" :name="fx.name" :value="fx.id">
                 </div>
@@ -211,7 +211,7 @@ export default {
     async submitCard(event){
       event.preventDefault();
 
-      this.card.frontImage = await this.uploadImage(this.frontFile);
+      this.card.frontImageId = await this.uploadImage(this.frontFile);
 
       API
         .post('card', this.card)

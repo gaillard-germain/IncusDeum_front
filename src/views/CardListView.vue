@@ -2,7 +2,7 @@
   <div class="card-list">
     <h1>This is the card list page</h1>
 
-    <CardListItem v-for="card in cards" :key="card.id" :card="card"/>
+    <CardListItem v-for="(card, index) in cards" :key="index" :card="card"/>
 
   </div>
 </template>
