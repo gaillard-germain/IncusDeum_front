@@ -9,7 +9,7 @@
     <div
       class="face front"
       :class="{ hidden: reverse }"
-      :style="{ 'background-image': `url('${card.frontImage}')` }"
+      :style="{ 'background-image': `url('${card.frontImage.url}')` }"
       >
       <div class="content">
         <div class="card-header">
@@ -32,7 +32,7 @@
     <div
       class="face back"
       :class="{ hidden: !reverse }"
-      :style="{ 'background-image': `url('${card.backImage}')` }">
+      :style="{ 'background-image': `url('${card.backImage.url}')` }">
     </div>
   </div>
 

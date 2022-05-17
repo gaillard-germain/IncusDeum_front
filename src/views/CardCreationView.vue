@@ -28,16 +28,20 @@ export default {
   data() {
     return {
       card: {
-        name: null,
+        name: "",
         category: {
-          id: null,
-          name: null
+          id: 0,
+          name: ""
         },
-        value: null,
-        frontImage: null,
-        backImage: null,
-        color: null,
-        description: null,
+        value: 0,
+        frontImage: {
+          url: ""
+        },
+        backImage: {
+          url: ""
+        },
+        color: "",
+        description: "",
         fx: []
       },
     }

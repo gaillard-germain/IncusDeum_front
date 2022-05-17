@@ -181,10 +181,10 @@ export default {
           (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg"))
         {
             if (event.target.name === 'frontImage') {
-              this.card.frontImage = URL.createObjectURL(files[0]);
+              this.card.frontImage.url = URL.createObjectURL(files[0]);
               this.frontFile = files[0];
             } else if (event.target.name === 'backImage') {
-              this.card.backImage = URL.createObjectURL(files[0]);
+              this.card.backImage.url = URL.createObjectURL(files[0]);
               this.backFile = files[0];
             }
 

@@ -1,7 +1,7 @@
 <template lang="html">
   <transition name="fade">
         <div class="popup-modal" v-if="isVisible">
-            <div class="window">
+            <div class="wrapper">
                 <slot></slot>
             </div>
         </div>
@@ -49,13 +49,9 @@ export default {
   z-index: 1;
 }
 
-.window {
-  background: #fff;
-  border-radius: 5px;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
+.wrapper {
+  margin: 0 auto;
   padding: 1rem;
+  color: white;
 }
 </style>

@@ -17,14 +17,15 @@
         {{ fx.name }} {{ fx.value }}
       </div>
     </div>
-
+    <button type="button" name="button" @click="$emit('showDetail', card.id)">Show</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "CardListItem",
-  props: ['card']
+  props: ['card'],
+
 }
 </script>
 
