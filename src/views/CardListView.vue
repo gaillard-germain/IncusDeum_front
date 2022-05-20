@@ -21,6 +21,7 @@ export default {
   },
   data() {
     return {
+      page: 0,
       cards: [],
       card: {
         name: "",
@@ -43,7 +44,7 @@ export default {
   },
   mounted() {
     API
-      .get('card')
+      .get('card', { params: { 'page': this.page } })
       .then((response) => {
         this.cards = response.data
       })
