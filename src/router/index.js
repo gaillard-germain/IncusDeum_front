@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import CardCreationView from '../views/CardCreationView.vue'
+import CardEditView from '../views/CardEditView.vue'
 import CardListView from '../views/CardListView.vue'
 
 const routes = [
@@ -18,9 +18,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/card_creation',
-    name: 'card_creation',
-    component: CardCreationView
+    path: '/card_edit/:id',
+    name: 'card_edit',
+    component: CardEditView
   },
   {
     path: '/card_list',

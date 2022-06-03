@@ -18,6 +18,7 @@
       </div>
     </div>
     <button type="button" name="button" @click="$emit('showDetail', card.id)">Show</button>
+    <router-link :to="{ name: 'card_edit', params: { id: card.id } }">Edit</router-link>
   </div>
 </template>
 
