@@ -39,9 +39,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: "CardPreview",
-  props: ['card'],
+  computed: {
+      ...mapState(['card'])
+  },
   data() {
     return {
       centerX: 0,

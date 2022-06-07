@@ -98,20 +98,22 @@
 <script>
 import { API } from '@/services/Api'
 import AddNew from './AddNew.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: "CardForm",
   components: {
     AddNew
   },
-  props: ['value'],
+  computed: {
+      ...mapState(['card'])
+  },
   data() {
     return {
       categoryInputs: {"name": null},
       fxInputs: {"name": null, "value": null},
       categories: null,
       fxs: null,
-      card: this.value,
       message: null,
       frontFile: null
     }

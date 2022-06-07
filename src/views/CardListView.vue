@@ -12,6 +12,7 @@
 import { API } from '@/services/Api'
 import CardListItem from '../components/CardListItem.vue'
 import CardDetail from '../components/CardDetail.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: "CardListView",
@@ -50,6 +51,7 @@ export default {
       })
   },
   methods: {
+    ...mapActions(['getCard']),
     async showCard(id) {
       this.getCard(id);
       const ok = await this.$refs.showCard.show()
@@ -59,13 +61,6 @@ export default {
               console.log("Aborted");
             }
     },
-    getCard(id) {
-      API
-      .get('card/' + id)
-      .then((response) => {
-        this.card = response.data
-      })
-    }
   }
 }
 </script>
