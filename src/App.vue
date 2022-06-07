@@ -6,7 +6,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/card_list">Card list</router-link> |
-      <router-link :to="{ name: 'card_edit', params: { id: 'new' } }">Create New Card</router-link>
+      <router-link to="/card_create">Create New Card</router-link>
     </nav>
   </header>
 

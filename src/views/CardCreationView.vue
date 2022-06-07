@@ -21,7 +21,7 @@ import CardForm from '../components/CardForm.vue'
 import { mapActions } from 'vuex'
 
 export default {
-  name: "CardEditView",
+  name: "CardCreationView",
   components: {
     CardPreview,
     CardForm
@@ -32,10 +32,10 @@ export default {
     }
   },
   mounted() {
-    this.getCard(this.$route.params.id);
+    this.clearCard();
   },
   methods: {
-    ...mapActions(['getCard'])
+      ...mapActions(['clearCard'])
   }
 }
 </script>

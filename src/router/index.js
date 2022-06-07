@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import CardCreationView from '../views/CardCreationView.vue'
 import CardEditView from '../views/CardEditView.vue'
 import CardListView from '../views/CardListView.vue'
 
@@ -16,6 +17,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/card_create',
+    name: 'card_create',
+    component: CardCreationView
   },
   {
     path: '/card_edit/:id',

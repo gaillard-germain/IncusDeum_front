@@ -19,8 +19,8 @@
                   placeholder="Name..."
                   required>
                 <div class="input-category">
-                  <select name="category" @change="setCategory" title="Select a categorie">
-                    <option v-for="(category, index) in categories" :key="index" :value="category.id">
+                  <select v-model="card.category" name="category" title="Select a categorie">
+                    <option v-for="(category, index) in categories" :key="index" :value="category">
                       {{ category.name }}
                     </option>
                   </select>
@@ -75,7 +75,7 @@
               <div class="input-fx">
                 <div class="checkbox-wrapper" v-for="(fx, index) in fxs" :key="index">
                   <label for="fx.name">{{ fx.name }} {{ fx.value }}</label>
-                  <input type="checkbox" @click="setFx" :name="fx.name" :value="fx.id">
+                  <input v-model="card.fx" type="checkbox" :name="fx.name" :value="fx">
                 </div>
                 <button class="add-button" type="button" name="addFx" @click="addFx" title="Add new effect">+</button>
               </div>
@@ -115,7 +115,7 @@ export default {
       categories: null,
       fxs: null,
       message: null,
-      frontFile: null
+      frontFile: null,
     }
   },
   mounted() {
@@ -142,19 +142,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
-    setCategory(event) {
-      this.card.category = this.categories.find(
-        (e) => e.id == event.target.value
-      );
-    },
-    setFx(event) {
-      let fx = this.fxs.find((e) => e.id == event.target.value);
-      if (event.target.checked) {
-        this.card.fx.push(fx);
-      } else {
-        this.card.fx = this.card.fx.filter((e) => { return e !== fx })
-      }
     },
     async addCategory() {
       const ok = await this.$refs.addCategory.show()
@@ -213,7 +200,10 @@ export default {
     async submitCard(event){
       event.preventDefault();
 
-      this.card.frontImageId = await this.uploadImage(this.frontFile);
+      if (this.frontFile) {
+        this.card.frontImage.id = await this.uploadImage(this.frontFile);
+      }
+
 
       API
         .post('card', this.card)
