@@ -1,9 +1,6 @@
 <template lang="html">
   <div class="row">
     <div class="cell">
-      {{ card.id }}
-    </div>
-    <div class="cell">
       {{ card.name }}
     </div>
     <div class="cell">
@@ -17,8 +14,8 @@
         {{ fx.name }} {{ fx.value }}
       </div>
     </div>
-    <button type="button" name="button" @click="$emit('showDetail', card.id)">Show</button>
-    <router-link :to="{ name: 'card_edit', params: { id: card.id } }">Edit</router-link>
+    <button class="button" type="button" name="button" @click="$emit('showDetail', card.id)">Show</button>
+    <router-link class="button" :to="{ name: 'card_edit', params: { id: card.id } }">Edit</router-link>
   </div>
 </template>
 
@@ -45,5 +42,17 @@ export default {
   border: 1px solid grey;
   background-color: white;
   width: 8rem;
+}
+.button {
+  margin: 0.2rem;
+  padding: 0.3rem;
+  text-decoration: none;
+  font-size: 1rem;
+  border: 1px solid grey;
+  border-radius: 5px;
+  color: black;
+  background-color: white;
+  font-family: inherit;
+  line-height: normal;
 }
 </style>

@@ -4,13 +4,13 @@
 
     <slot></slot>
 
-    <form method="post">
+    <form method="post" @submit="submitNew">
       <div class="input-wrapper" v-for="(value, field, index) in payload" :key="index">
         <label for="field">{{ field }}</label>
         <input v-model="payload[field]" type="text" name="field" placeholder="" required>
       </div>
       <div class="button-wrapper">
-        <button type="submit" name="button" @click="submitNew">Submit</button>
+        <button type="submit" name="button">Submit</button>
         <button type="button" name="button" @click="cancel">Cancel</button>
       </div>
     </form>
