@@ -1,11 +1,12 @@
 <template lang="html">
 
   <PopupModal ref="popup">
-    <div class="card-wrapper">
-      <CardPreview/>
-    </div>
+
+    <slot></slot>
+
     <div class="button-wrapper">
-      <button type="submit" name="button" @click="close">Close</button>
+      <button type="button" name="button" @click="confirm">Confirm</button>
+      <button type="button" name="button" @click="cancel">Cancel</button>
     </div>
 
   </PopupModal>
@@ -14,13 +15,11 @@
 
 <script>
 import PopupModal from '../components/PopupModal.vue'
-import CardPreview from '../components/CardPreview.vue'
 
 export default {
   name: "CardDetail",
   components: {
-    PopupModal,
-    CardPreview
+    PopupModal
   },
   data() {
     return {
@@ -37,9 +36,13 @@ export default {
           this.rejectPromise = reject;
       })
     },
-    close() {
+    confirm() {
       this.$refs.popup.close();
       this.resolvePromise(true);
+    },
+    cancel() {
+      this.$refs.popup.close();
+      this.resolvePromise(false);
     }
   },
 }

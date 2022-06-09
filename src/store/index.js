@@ -23,6 +23,7 @@ export default createStore({
     },
   },
   getters: {
+
   },
   mutations: {
     UPDATE_CARD(state, card) {

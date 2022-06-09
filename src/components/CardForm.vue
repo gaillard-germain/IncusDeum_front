@@ -84,6 +84,7 @@
         </div>
       </div>
       <button class="submit-btn" type="submit">Submit card</button>
+      <button class="submit-btn" type="button" @click="$router.push({ name: 'card_list'})">Cancel</button>
       <p class="text-warning">{{ message }}</p>
     </form>
     <AddNew ref="addCategory" :fields="categoryInputs" :apiPoint="'category'">

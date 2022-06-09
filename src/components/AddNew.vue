@@ -70,19 +70,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .input-wrapper {
-    padding: 0.5rem;
-
-    label {
-      padding-right: 0.5rem;
-    }
-  }
-
-  .button-wrapper {
-    margin: 1rem;
-
-    button {
-      margin: 0.5rem;
-    }
-  }
+  
 </style>

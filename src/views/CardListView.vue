@@ -1,52 +1,58 @@
 <template lang="html">
   <div class="card-list">
-    <h1>This is the card list page</h1>
+    <div>
+      <h1>Cards list</h1>
 
-    <CardListItem v-for="(card, index) in cards" :key="index" :card="card" @showDetail="showCard($event)"/>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Value</th>
+          <th>Fx</th>
+        </tr>
+        <CardListItem
+          v-for="(card, index) in cards"
+          :key="index"
+          :card="card"
+          @showDetail="showCard($event)"
+          @deleteCard="deleteCard($event)"/>
+      </table>
 
-  </div>
-  <div class="pages">
-    <div class="page-nbr" @click="gotoPage" v-for="index in pages" :key="index" :class="{ active: page == index }">
-      {{ index }}
     </div>
+    <div class="pages">
+      <div class="page-nbr" @click="gotoPage" v-for="index in pages" :key="index" :class="{ active: page == index }">
+        {{ index }}
+      </div>
+    </div>
+    <CardDetail ref="showCard" />
+    <ConfirmPopup ref="deleteCard">
+      <h2>Do you really want to destroy '{{ card.name }}'?</h2>
+    </ConfirmPopup>
   </div>
-  <CardDetail ref="showCard" :card="card"></CardDetail>
 </template>
 
 <script>
 import { API } from '@/services/Api'
 import CardListItem from '../components/CardListItem.vue'
 import CardDetail from '../components/CardDetail.vue'
-import { mapActions } from 'vuex'
+import ConfirmPopup from '../components/ConfirmPopup.vue'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: "CardListView",
   components: {
     CardListItem,
-    CardDetail
+    CardDetail,
+    ConfirmPopup
+  },
+  computed: {
+    ...mapState(['card'])
   },
   data() {
     return {
       pages: 1,
       page: 1,
-      cards: [],
-      card: {
-        name: "",
-        category: {
-          id: 0,
-          name: ""
-        },
-        value: 0,
-        frontImage: {
-          url: ""
-        },
-        backImage: {
-          url: ""
-        },
-        color: "",
-        description: "",
-        fx: []
-      },
+      cards: []
     }
   },
   mounted() {
@@ -57,11 +63,29 @@ export default {
     async showCard(id) {
       this.getCard(id);
       const ok = await this.$refs.showCard.show()
-            if (ok) {
-              console.log("Closed");
-            } else {
-              console.log("Aborted");
-            }
+          if (ok) {
+            console.log("Closed");
+          } else {
+            console.log("Aborted");
+          }
+    },
+    async deleteCard(id) {
+      this.getCard(id);
+      const ok = await this.$refs.deleteCard.show()
+        if (ok) {
+          API
+            .delete('card/' + id)
+            .then((response) => {
+              console.log(response);
+              console.log(`Deleted card ${id}!`);
+              this.getCards();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          console.log("Aborted");
+        }
     },
     getCards() {
       API
@@ -70,6 +94,9 @@ export default {
           this.cards = response.data.cards;
           this.pages = response.data.pages;
         })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     gotoPage(event) {
       this.page = parseInt(event.target.innerHTML);
@@ -80,25 +107,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pages {
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.2rem;
-
-  .page-nbr {
-    line-height: 1.7rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 1px solid lightgrey;
-    cursor: pointer;
-    color: lightgrey;
-  }
-
-  .active {
-    color: black;
-    border-color: black;
-  }
-}
 </style>

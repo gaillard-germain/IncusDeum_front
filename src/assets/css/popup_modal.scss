@@ -1,0 +1,37 @@
+.popup-modal {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+
+  .wrapper {
+    margin: 0 auto;
+    padding: 1rem;
+    color: white;
+
+    .input-wrapper {
+      padding: 0.5rem;
+
+      label {
+        padding-right: 0.5rem;
+      }
+    }
+
+    .button-wrapper {
+      margin: 1rem;
+
+      button {
+        padding: 0.2rem;
+        font-family: inherit;
+        font-size: 1rem;
+        margin: 0.5rem;
+      }
+    }
+  }
+}
