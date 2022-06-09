@@ -5,6 +5,11 @@
     <CardListItem v-for="(card, index) in cards" :key="index" :card="card" @showDetail="showCard($event)"/>
 
   </div>
+  <div class="pages">
+    <div class="page-nbr" @click="gotoPage" v-for="index in pages" :key="index" :class="{ active: page == index }">
+      {{ index }}
+    </div>
+  </div>
   <CardDetail ref="showCard" :card="card"></CardDetail>
 </template>
 
@@ -22,7 +27,8 @@ export default {
   },
   data() {
     return {
-      page: 0,
+      pages: 1,
+      page: 1,
       cards: [],
       card: {
         name: "",
@@ -44,11 +50,7 @@ export default {
     }
   },
   mounted() {
-    API
-      .get('card', { params: { 'page': this.page } })
-      .then((response) => {
-        this.cards = response.data
-      })
+    this.getCards();
   },
   methods: {
     ...mapActions(['getCard']),
@@ -61,9 +63,42 @@ export default {
               console.log("Aborted");
             }
     },
+    getCards() {
+      API
+        .get('card', { params: { 'page': this.page } })
+        .then((response) => {
+          this.cards = response.data.cards;
+          this.pages = response.data.pages;
+        })
+    },
+    gotoPage(event) {
+      this.page = parseInt(event.target.innerHTML);
+      this.getCards();
+    }
   }
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+.pages {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+
+  .page-nbr {
+    line-height: 1.7rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid lightgrey;
+    cursor: pointer;
+    color: lightgrey;
+  }
+
+  .active {
+    color: black;
+    border-color: black;
+  }
+}
 </style>
