@@ -9,6 +9,7 @@
         <label for="field">{{ field }}</label>
         <input v-model="payload[field]" type="text" name="field" placeholder="" required>
       </div>
+      <p class="text-warning">{{ message }}</p>
       <div class="button-wrapper">
         <button type="submit" name="button">Submit</button>
         <button type="button" name="button" @click="cancel">Cancel</button>
@@ -31,6 +32,7 @@ export default {
   props: ['fields', 'apiPoint'],
   data() {
     return {
+      message: "",
       payload: this.fields,
       resolvePromise: undefined,
       rejectPromise: undefined,
@@ -57,7 +59,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.cancel();
+          this.message = error.response.data;
         });
 
     },
@@ -70,5 +72,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  
+
 </style>

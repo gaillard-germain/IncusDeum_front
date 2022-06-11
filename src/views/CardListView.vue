@@ -5,9 +5,21 @@
 
       <table>
         <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Value</th>
+          <th class="clickable" @click="changeOrder('name')">
+            Name
+            <span v-show="order === 'name' && asc">&#x21E7;</span>
+            <span v-show="order === 'name' && !asc">&#x21E9;</span>
+          </th>
+          <th class="clickable" @click="changeOrder('category')">
+            Category
+            <span v-show="order === 'category' && asc">&#x21E7;</span>
+            <span v-show="order === 'category' && !asc">&#x21E9;</span>
+          </th>
+          <th class="clickable" @click="changeOrder('value')">
+            Value
+            <span v-show="order === 'value' && asc">&#x21E7;</span>
+            <span v-show="order === 'value' && !asc">&#x21E9;</span>
+          </th>
           <th>Fx</th>
         </tr>
         <CardListItem
@@ -52,7 +64,9 @@ export default {
     return {
       pages: 1,
       page: 1,
-      cards: []
+      cards: [],
+      order: "name",
+      asc: true,
     }
   },
   mounted() {
@@ -89,7 +103,7 @@ export default {
     },
     getCards() {
       API
-        .get('card', { params: { 'page': this.page } })
+        .get('card', { params: { 'page': this.page, 'order': this.order, 'asc': this.asc } })
         .then((response) => {
           this.cards = response.data.cards;
           this.pages = response.data.pages;
@@ -100,6 +114,15 @@ export default {
     },
     gotoPage(event) {
       this.page = parseInt(event.target.innerHTML);
+      this.getCards();
+    },
+    changeOrder(value) {
+      if (this.order == value) {
+        this.asc = !this.asc;
+      } else {
+        this.order = value;
+        this.asc = true;
+      }
       this.getCards();
     }
   }
