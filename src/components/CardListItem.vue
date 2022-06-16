@@ -15,9 +15,9 @@
       </div>
     </td>
     <td class="cell">
-      <button class="button" type="button" name="showBtn" @click="$emit('showDetail', card.id)">Show</button>
-      <button class="button" type="button" name="showBtn" @click="$router.push({ name: 'card_edit', params: { id: card.id } })">Edit</button>
-      <button class="button" type="button" name="deleteBtn" @click="$emit('deleteCard', card.id)">Delete</button>
+      <button class="button" type="button" name="showBtn" @click="$emit('showDetail', card.id)" title="Show"><font-awesome-icon :icon="['far', 'eye']" /></button>
+      <button class="button" type="button" name="showBtn" @click="$router.push({ name: 'card_edit', params: { id: card.id } })" title="Edit"><font-awesome-icon :icon="['far', 'edit']" /></button>
+      <button class="button" type="button" name="deleteBtn" @click="$emit('deleteCard', card.id)" title="Delete"><font-awesome-icon :icon="['far', 'trash-alt']" /></button>
     </td>
 
   </tr>

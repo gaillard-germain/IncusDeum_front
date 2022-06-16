@@ -3,24 +3,7 @@ import { API } from '@/services/Api'
 
 export default createStore({
   state: {
-    card: {
-      id: null,
-      name: "",
-      category: {
-        id: 0,
-        name: ""
-      },
-      value: null,
-      frontImage: {
-        url: ""
-      },
-      backImage: {
-        url: ""
-      },
-      color: "",
-      description: "",
-      fx: []
-    },
+    card: null
   },
   getters: {
 
@@ -34,17 +17,19 @@ export default createStore({
           id: null,
           name: "",
           category: {
-            id: 0,
+            id: null,
             name: ""
           },
           value: null,
           frontImage: {
+            id: null,
             url: ""
           },
           backImage: {
+            id: null,
             url: ""
           },
-          color: "",
+          color: "#474543",
           description: "",
           fx: []
       };

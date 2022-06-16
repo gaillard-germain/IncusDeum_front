@@ -24,7 +24,9 @@
                       {{ category.name }}
                     </option>
                   </select>
-                  <button class="add-button" type="button" name="addCategory" @click="addCategory" title="Add new category">+</button>
+                  <button class="add-button" type="button" name="addCategory" @click="addCategory" title="Add new category">
+                    <font-awesome-icon :icon="['far', 'plus-square']" />
+                  </button>
                 </div>
               </div>
               <div class="value">
@@ -55,7 +57,7 @@
               <div class="color-wrapper">
                 <label for="color">Color:</label>
                 <input
-                  @change="setColor"
+                  v-model="card.color"
                   type="color"
                   class="input-color"
                   name="color"
@@ -77,7 +79,9 @@
                   <label for="fx.name">{{ fx.name }} {{ fx.value }}</label>
                   <input v-model="card.fx" type="checkbox" :name="fx.name" :value="fx">
                 </div>
-                <button class="add-button" type="button" name="addFx" @click="addFx" title="Add new effect">+</button>
+                <button class="add-button" type="button" name="addFx" @click="addFx" title="Add new effect">
+                  <font-awesome-icon :icon="['far', 'plus-square']" />
+                </button>
               </div>
             </div>
           </div>
@@ -195,9 +199,6 @@ export default {
           console.log(error);
         });
     },
-    setColor(event) {
-      this.card.color = event.target.value;
-    },
     async submitCard(event){
       event.preventDefault();
 
@@ -205,6 +206,9 @@ export default {
         this.card.frontImage.id = await this.uploadImage(this.frontFile);
       }
 
+      if (this.backFile) {
+        this.card.backImage.id = await this.uploadImage(this.backFile);
+      }
 
       API
         .post('card', this.card)

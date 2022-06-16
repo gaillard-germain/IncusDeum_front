@@ -7,18 +7,18 @@
         <tr>
           <th class="clickable" @click="changeOrder('name')">
             Name
-            <span v-show="order === 'name' && asc">&#x21E7;</span>
-            <span v-show="order === 'name' && !asc">&#x21E9;</span>
+            <span v-show="order === 'name' && asc"><font-awesome-icon :icon="['fas', 'sort-amount-up']" /></span>
+            <span v-show="order === 'name' && !asc"><font-awesome-icon :icon="['fas', 'sort-amount-down']" /></span>
           </th>
           <th class="clickable" @click="changeOrder('category')">
             Category
-            <span v-show="order === 'category' && asc">&#x21E7;</span>
-            <span v-show="order === 'category' && !asc">&#x21E9;</span>
+            <span v-show="order === 'category' && asc"><font-awesome-icon :icon="['fas', 'sort-amount-up']" /></span>
+            <span v-show="order === 'category' && !asc"><font-awesome-icon :icon="['fas', 'sort-amount-down']" /></span>
           </th>
           <th class="clickable" @click="changeOrder('value')">
             Value
-            <span v-show="order === 'value' && asc">&#x21E7;</span>
-            <span v-show="order === 'value' && !asc">&#x21E9;</span>
+            <span v-show="order === 'value' && asc"><font-awesome-icon :icon="['fas', 'sort-amount-up']" /></span>
+            <span v-show="order === 'value' && !asc"><font-awesome-icon :icon="['fas', 'sort-amount-down']" /></span>
           </th>
           <th>Fx</th>
         </tr>
@@ -91,7 +91,6 @@ export default {
             .delete('card/' + id)
             .then((response) => {
               console.log(response);
-              console.log(`Deleted card ${id}!`);
               this.getCards();
             })
             .catch((error) => {
@@ -107,6 +106,7 @@ export default {
         .then((response) => {
           this.cards = response.data.cards;
           this.pages = response.data.pages;
+          console.log(this.pages);
         })
         .catch((error) => {
           console.log(error);

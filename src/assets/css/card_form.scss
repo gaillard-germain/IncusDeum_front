@@ -28,21 +28,19 @@
 
     .add-button {
       padding: 0;
-      width: 1.2rem;
-      height: 1.2rem;
-      border-radius: 50%;
-      border: 2px solid #474543;
-      line-height: 0;
-      font-size: 1rem;
+      border: none;
+      line-height: normal;
+      font-family: inherit;
+      font-size: 1.2rem;
       font-weight: bold;
-      color: #474543;
+      color: white;
       background-color: inherit;
+      filter: drop-shadow(2px 2px 2px black);
       cursor: pointer;
-    }
 
-    .add-button:hover {
-      border-color: grey;
-      color: grey;
+      &:hover {
+        filter: drop-shadow(2px 2px 2px skyblue);
+      }
     }
 
     .input-value {
